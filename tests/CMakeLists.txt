@@ -1,5 +1,5 @@
 file(GLOB TEST_INCLUDES
-
+    TVector.h
 )
 
 file(GLOB TEST_SOURCES
