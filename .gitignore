@@ -1,0 +1,9 @@
+build
+out
+cmake-build-debug
+CMakeSettings.json
+.cache
+.idea
+.vs
+.vscode
+
