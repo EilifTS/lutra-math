@@ -35,6 +35,23 @@ namespace ef
 				}
 			};
 
+			/* Specialized 2-component constructors */
+			inline BaseVector(T x, T y) requires(N == 2) : data{x, y} {};
+
+			/* Specialized 3-component constructors */
+			inline BaseVector(T x, T y, T z) : data{ x, y, z } {};
+			inline BaseVector(const BaseVector<T, 2>& xy, T z) : data{ xy.x(), xy.y(), z} {};
+			inline BaseVector(T x, const BaseVector<T, 2>& yz) : data{ x, yz.x(), yz.y() } {};
+
+			/* Specialized 4-component constructors */
+			inline BaseVector(T x, T y, T z, T w) : data{ x, y, z, w } {};
+			inline BaseVector(const BaseVector<T, 2>& xy, const BaseVector<T, 2>& zw) : data{ xy.x(), xy.y(), zw.x(), zw.y() } {};
+			inline BaseVector(const BaseVector<T, 2>& xy, T z, T w) : data{ xy.x(), xy.y(), z, w } {};
+			inline BaseVector(T x, T y, const BaseVector<T, 2>& zw) : data{ x, y, zw.x(), zw.y() } {};
+			inline BaseVector(T x, const BaseVector<T, 2>& yz, T w) : data{ x, yz.x(), yz.y(), w } {};
+			inline BaseVector(const BaseVector<T, 3>& xyz, T w) : data{ xyz.x(), xyz.y(), xyz.z(), w } {};
+			inline BaseVector(T x, const BaseVector<T, 3>& yzw) : data{ x, yzw.x(), yzw.y(), yzw.z() } {};
+
 			inline T LengthSquared() const
 			{
 				return Dot(*this, *this);
@@ -215,46 +232,25 @@ namespace ef
 			}
 
 			/* Accessors */
-			inline T& x()      requires(N <= 1) { return data[0]; };
-			inline T x() const requires(N <= 1) { return data[0]; };
-			inline T& y()      requires(N <= 2) { return data[1]; };
-			inline T y() const requires(N <= 2) { return data[1]; };
-			inline T& z()      requires(N <= 3) { return data[2]; };
-			inline T z() const requires(N <= 3) { return data[2]; };
-			inline T& w()      requires(N <= 4) { return data[3]; };
-			inline T w() const requires(N <= 4) { return data[3]; };
+			inline T& x()      requires(N >= 1) { return data[0]; };
+			inline T x() const requires(N >= 1) { return data[0]; };
+			inline T& y()      requires(N >= 2) { return data[1]; };
+			inline T y() const requires(N >= 2) { return data[1]; };
+			inline T& z()      requires(N >= 3) { return data[2]; };
+			inline T z() const requires(N >= 3) { return data[2]; };
+			inline T& w()      requires(N >= 4) { return data[3]; };
+			inline T w() const requires(N >= 4) { return data[3]; };
 
-		protected:
-			T data[4]{};
-		};
-
-		template <typename T, u32 N>
-		inline BaseVector<T, N> operator*(T lhs, const BaseVector<T, N>& a)
-		{
-			return a * lhs;
-		};
-
-		template <typename T>
-		class BaseVector2 : public BaseVector<T, 2>
-		{
-		public:
-			using Base = BaseVector<T, 2>;
-			using typename Base::BaseVector; /* Inherit constructors */
-
-			/* Specialized constructors */
-			inline BaseVector2() : Base() {};
-			inline BaseVector2(T x, T y) : Base({ x, y }) {};
-
-			/* Specialized functions */
-			inline static float Cross(const BaseVector2& lhs, const BaseVector2& rhs)
+			/* 2-component specializations */
+			inline static float Cross(const BaseVector& lhs, const BaseVector& rhs) requires (N == 2)
 			{
 				return lhs.x() * rhs.y() - lhs.y() * rhs.x();
 			}
-			inline float Angle() const
+			inline float Angle() const requires (N == 2)
 			{
 				return atan2f(float(y()), float(x()));
 			}
-			inline void Rotate(float angle)
+			inline void Rotate(float angle) requires (N == 2)
 			{
 				const float c = cosf(angle);
 				const float s = sinf(angle);
@@ -263,48 +259,25 @@ namespace ef
 				x() = T(c * ox - s * oy);
 				y() = T(s * ox + c * oy);
 			}
-		};
 
-		template <typename T>
-		class BaseVector3 : public BaseVector<T, 3>
-		{
-		public:
-			using Base = BaseVector<T, 3>;
-			using typename Base::BaseVector; /* Inherit constructors */
-
-			/* Specialized constructors */
-			inline BaseVector3() : Base() {};
-			inline BaseVector3(T x, T y, T z) : Base({ x, y, z }) {};
-			inline BaseVector3(const BaseVector2<T>& xy, T z) : Base({ xy.x, xy.y, z }) {};
-			inline BaseVector3(T x, const BaseVector2<T>& yz) : Base({ x, yz.x, yz.y }) {};
-
-			/* Specialized functions */
-			inline static BaseVector3 Cross(const BaseVector3& lhs, const BaseVector3& rhs)
+			/* 3-component specializations */
+			inline static BaseVector Cross(const BaseVector& lhs, const BaseVector& rhs) requires (N == 3)
 			{
-				return BaseVector3(
+				return BaseVector(
 					lhs.y() * rhs.z() - lhs.z() * rhs.y(),
 					lhs.z() * rhs.x() - lhs.x() * rhs.z(),
 					lhs.x() * rhs.y() - lhs.y() * rhs.x()
 				);
 			}
+
+		protected:
+			T data[N]{};
 		};
 
-		template <typename T>
-		class BaseVector4 : public BaseVector<T, 4>
+		template <typename T, u32 N>
+		inline BaseVector<T, N> operator*(T lhs, const BaseVector<T, N>& a)
 		{
-		public:
-			using Base = BaseVector<T, 4>;
-			using typename Base::BaseVector; /* Inherit constructors */
-
-			/* Specialized constructors */
-			inline BaseVector4() : Base() {};
-			inline BaseVector4(T x, T y, T z, T w) : Base({ x, y, z, w }) {};
-			inline BaseVector4(const BaseVector2<T>& xy, const BaseVector2<T>& zw) : Base({ xy.x, xy.y, zw.x, zw.y }) {};
-			inline BaseVector4(const BaseVector2<T>& xy, T z, T w) : Base({ xy.x, xy.y, z, w }) {};
-			inline BaseVector4(T x, T y, const BaseVector2<T>& zw) : Base({ x, y, zw.x, zw.y }) {};
-			inline BaseVector4(T x, const BaseVector2<T>& yz, T w) : Base({ x, yz.x, yz.y, w }) {};
-			inline BaseVector4(const BaseVector3<T>& xyz, T w) : Base({ xyz.x, xyz.y, xyz.z, w }) {};
-			inline BaseVector4(T x, const BaseVector3<T>& yzw) : Base({ x, yzw.x, yzw.y, yzw.z }) {};
+			return a * lhs;
 		};
 	}
 }
