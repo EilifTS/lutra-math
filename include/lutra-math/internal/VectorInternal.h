@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cmath>
 #include <initializer_list>
+#include <type_traits>
 
 namespace ef
 {
@@ -23,7 +24,7 @@ namespace ef
 					this->data[i] = v;
 				}
 			};
-			explicit inline BaseVector(std::initializer_list<T> l)
+			inline BaseVector(std::initializer_list<T> l)
 			{
 				assert(l.size() == N);
 				u32 i = 0;
@@ -57,6 +58,7 @@ namespace ef
 				return *this == BaseVector(T(0));
 			}
 
+			/* Operators */
 			inline BaseVector& operator+=(const BaseVector& rhs)
 			{
 				for (u32 i = 0; i < N; i++)
@@ -89,6 +91,22 @@ namespace ef
 				}
 				return *this;
 			};
+			inline BaseVector& operator<<=(const BaseVector& rhs) requires std::integral<T>
+			{
+				for (u32 i = 0; i < N; i++)
+				{
+					this->data[i] <<= rhs.data[i];
+				}
+				return *this;
+			}
+			inline BaseVector& operator>>=(const BaseVector& rhs) requires std::integral<T>
+			{
+				for (u32 i = 0; i < N; i++)
+				{
+					this->data[i] >>= rhs.data[i];
+				}
+				return *this;
+			}
 			inline BaseVector operator+(const BaseVector& rhs) const
 			{
 				BaseVector temp(*this);
@@ -113,6 +131,18 @@ namespace ef
 				temp /= rhs;
 				return temp;
 			};
+			inline BaseVector operator<<(const BaseVector& rhs) const requires std::integral<T>
+			{
+				BaseVector temp(*this);
+				temp <<= rhs;
+				return temp;
+			}
+			inline BaseVector operator>>(const BaseVector& rhs) const requires std::integral<T>
+			{
+				BaseVector temp(*this);
+				temp >>= rhs;
+				return temp;
+			}
 			inline BaseVector operator-() const
 			{
 				BaseVector temp;
@@ -163,7 +193,7 @@ namespace ef
 			};
 			inline float& operator[](int i)
 			{
-				assert(i >= 0 && i < 4);
+				assert(i >= 0 && i < N);
 				return data[i];
 			};
 
@@ -177,13 +207,22 @@ namespace ef
 				return result;
 			};
 
-
 			inline static float Angle(const BaseVector& lhs, const BaseVector& rhs)
 			{
 				const float dot = float(Dot(lhs, rhs));
 				const float l = lhs.Length() * rhs.Length();
 				return std::acos(dot / l);
 			}
+
+			/* Accessors */
+			inline T& x()      requires(N <= 1) { return data[0]; };
+			inline T x() const requires(N <= 1) { return data[0]; };
+			inline T& y()      requires(N <= 2) { return data[1]; };
+			inline T y() const requires(N <= 2) { return data[1]; };
+			inline T& z()      requires(N <= 3) { return data[2]; };
+			inline T z() const requires(N <= 3) { return data[2]; };
+			inline T& w()      requires(N <= 4) { return data[3]; };
+			inline T w() const requires(N <= 4) { return data[3]; };
 
 		protected:
 			T data[4]{};
@@ -205,12 +244,6 @@ namespace ef
 			/* Specialized constructors */
 			inline BaseVector2() : Base() {};
 			inline BaseVector2(T x, T y) : Base({ x, y }) {};
-
-			/* Specialized accessors */
-			inline T& x() { return Base::data[0]; };
-			inline T x() const { return Base::data[0]; };
-			inline T& y() { return Base::data[1]; };
-			inline T y() const { return Base::data[1]; };
 
 			/* Specialized functions */
 			inline static float Cross(const BaseVector2& lhs, const BaseVector2& rhs)
@@ -245,14 +278,6 @@ namespace ef
 			inline BaseVector3(const BaseVector2<T>& xy, T z) : Base({ xy.x, xy.y, z }) {};
 			inline BaseVector3(T x, const BaseVector2<T>& yz) : Base({ x, yz.x, yz.y }) {};
 
-			/* Specialized accessors */
-			inline T& x() { return Base::data[0]; };
-			inline T x() const { return Base::data[0]; };
-			inline T& y() { return Base::data[1]; };
-			inline T y() const { return Base::data[1]; };
-			inline T& z() { return Base::data[2]; };
-			inline T z() const { return Base::data[2]; };
-
 			/* Specialized functions */
 			inline static BaseVector3 Cross(const BaseVector3& lhs, const BaseVector3& rhs)
 			{
@@ -280,17 +305,6 @@ namespace ef
 			inline BaseVector4(T x, const BaseVector2<T>& yz, T w) : Base({ x, yz.x, yz.y, w }) {};
 			inline BaseVector4(const BaseVector3<T>& xyz, T w) : Base({ xyz.x, xyz.y, xyz.z, w }) {};
 			inline BaseVector4(T x, const BaseVector3<T>& yzw) : Base({ x, yzw.x, yzw.y, yzw.z }) {};
-
-
-			/* Specialized accessors */
-			inline T& x() { return Base::data[0]; };
-			inline T x() const { return Base::data[0]; };
-			inline T& y() { return Base::data[1]; };
-			inline T y() const { return Base::data[1]; };
-			inline T& z() { return Base::data[2]; };
-			inline T z() const { return Base::data[2]; };
-			inline T& w() { return Base::data[3]; };
-			inline T w() const { return Base::data[3]; };
 		};
 	}
 }
