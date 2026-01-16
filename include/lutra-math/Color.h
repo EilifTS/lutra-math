@@ -1,7 +1,6 @@
 #pragma once
 #include <lutra-math/Types.h>
 #include <lutra-math/Vector.h>
-#include "vec.h"
 #include <cassert>
 
 namespace lma
@@ -27,15 +26,15 @@ namespace lma
 		}
 		inline Color(const vec4& c)
 		{
-			assert(c.x >= 0.0f && c.x <= 1.0f);
-			assert(c.y >= 0.0f && c.y <= 1.0f);
-			assert(c.z >= 0.0f && c.z <= 1.0f);
-			assert(c.w >= 0.0f && c.w <= 1.0f);
+			assert(c.x() >= 0.0f && c.x <= 1.0f);
+			assert(c.y() >= 0.0f && c.y <= 1.0f);
+			assert(c.z() >= 0.0f && c.z <= 1.0f);
+			assert(c.w() >= 0.0f && c.w <= 1.0f);
 			auto temp = c * 255.9999f;
-			r = u8(temp.x);
-			g = u8(temp.y);
-			b = u8(temp.z);
-			a = u8(temp.w);
+			r = u8(temp.x());
+			g = u8(temp.y());
+			b = u8(temp.z());
+			a = u8(temp.w());
 		}
 		inline Color(const vec3& c)
 			: Color(vec4(c, 1.0f))
@@ -44,7 +43,7 @@ namespace lma
 
 		vec3 ToVec3() const
 		{
-			return { float(r) / 255.0f, float(g) / 255.0f, float(b) / 255.0f};
+			return { float(r) / 255.0f, float(g) / 255.0f, float(b) / 255.0f };
 		}
 		vec4 ToVec4() const
 		{

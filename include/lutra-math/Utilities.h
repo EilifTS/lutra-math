@@ -40,40 +40,40 @@ namespace lma
 	inline vec2 Min(vec2 v1, vec2 v2)
 	{
 		return vec2(
-			Min(v1.x, v2.x),
-			Min(v1.y, v2.y));
+			Min(v1.x(), v2.x()),
+			Min(v1.y(), v2.y()));
 	}
 
-	inline point2 Min(point2 v1, point2 v2)
+	inline int2 Min(int2 v1, int2 v2)
 	{
-		return point2(
-			Min(v1.x, v2.x),
-			Min(v1.y, v2.y));
+		return int2(
+			Min(v1.x(), v2.x()),
+			Min(v1.y(), v2.y()));
 	}
 
 	inline vec3 Min(vec3 v1, vec3 v2)
 	{
 		return vec3(
-			Min(v1.x, v2.x),
-			Min(v1.y, v2.y),
-			Min(v1.z, v2.z));
+			Min(v1.x(), v2.x()),
+			Min(v1.y(), v2.y()),
+			Min(v1.z(), v2.z()));
 	}
 
-	inline point3 Min(point3 v1, point3 v2)
+	inline int3 Min(int3 v1, int3 v2)
 	{
-		return point3(
-			Min(v1.x, v2.x),
-			Min(v1.y, v2.y),
-			Min(v1.z, v2.z));
+		return int3(
+			Min(v1.x(), v2.x()),
+			Min(v1.y(), v2.y()),
+			Min(v1.z(), v2.z()));
 	}
 
 	inline vec4 Min(vec4 v1, vec4 v2)
 	{
 		return vec4(
-			Min(v1.x, v2.x),
-			Min(v1.y, v2.y),
-			Min(v1.z, v2.z),
-			Min(v1.w, v2.w));
+			Min(v1.x(), v2.x()),
+			Min(v1.y(), v2.y()),
+			Min(v1.z(), v2.z()),
+			Min(v1.w(), v2.w()));
 	}
 
 	template <typename T>
@@ -136,7 +136,7 @@ namespace lma
 			x = (x - start) / (end - start);
 			x = 2.0f * x - 1.0f;
 			float v = Smooth(x, b);
-			v = 0.5f*(v / b + 1.0f);
+			v = 0.5f * (v / b + 1.0f);
 			v = v * (new_end - start) + start;
 			return v;
 		}
