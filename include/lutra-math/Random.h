@@ -1,7 +1,7 @@
 #pragma once
 #include <lutra-math/Types.h>
 
-namespace ef
+namespace lma
 {
 	inline void SetRandomSeed(u32 seed)
 	{

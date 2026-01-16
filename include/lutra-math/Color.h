@@ -4,7 +4,7 @@
 #include "vec.h"
 #include <cassert>
 
-namespace ef
+namespace lma
 {
 
 	class Color

@@ -1,7 +1,7 @@
 #pragma once
 #include <lutra-math/Vector.h>
 
-namespace ef
+namespace lma
 {
 	template <typename T>
 	class RectangleT

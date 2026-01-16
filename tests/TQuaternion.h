@@ -5,16 +5,16 @@
 
 TEST(Quaternion, Identity)
 {
-	const ef::quat q = ef::quat::Identity();
-	ASSERT_TRUE(q.ToVector() == ef::vec4(1.0f, 0.0f, 0.0f, 0.0f));
+	const lma::quat q = lma::quat::Identity();
+	ASSERT_TRUE(q.ToVector() == lma::vec4(1.0f, 0.0f, 0.0f, 0.0f));
 }
 
 TEST(Quaternion, Identities)
 {
-	const ef::quat one = ef::quat::Identity();
-	const ef::quat i = ef::quat::I();
-	const ef::quat j = ef::quat::J();
-	const ef::quat k = ef::quat::K();
+	const lma::quat one = lma::quat::Identity();
+	const lma::quat i = lma::quat::I();
+	const lma::quat j = lma::quat::J();
+	const lma::quat k = lma::quat::K();
 
 	ASSERT_TRUE((one * one).ToVector() == one.ToVector());
 	ASSERT_TRUE((one * one).ToVector() == one.ToVector());

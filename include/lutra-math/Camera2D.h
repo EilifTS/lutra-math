@@ -1,7 +1,7 @@
 #pragma once
 #include "Math.h"
 
-namespace ef
+namespace lma
 {
 	class Camera2D
 	{

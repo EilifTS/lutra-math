@@ -39,11 +39,11 @@ static void BenchmarkVector4Add(benchmark::State& state)
 {
 	const u32 size = u32(state.range(0));
 
-	std::vector<ef::vec4> a(size, ef::vec4(1.0f, 2.0f, 3.0f, 4.0f));
+	std::vector<lma::vec4> a(size, lma::vec4(1.0f, 2.0f, 3.0f, 4.0f));
 
 	benchmark::ClobberMemory();
 
-	ef::vec4 sum{};
+	lma::vec4 sum{};
 	for (auto _ : state)
 	{
 		for (u32 i = 0; i < size; i++)

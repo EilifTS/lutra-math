@@ -4,7 +4,7 @@
 #include <cassert>
 #include <cmath>
 
-namespace ef
+namespace lma
 {
 	using uint2 = internal::BaseVector<u32, 2>;
 	using uint3 = internal::BaseVector<u32, 3>;

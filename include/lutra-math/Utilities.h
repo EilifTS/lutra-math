@@ -2,7 +2,7 @@
 #include <lutra-math/Vector.h>
 #include <vector>
 
-namespace ef
+namespace lma
 {
 	namespace easing
 	{

@@ -5,7 +5,7 @@
 #include <initializer_list>
 #include <type_traits>
 
-namespace ef
+namespace lma
 {
 	namespace internal
 	{
