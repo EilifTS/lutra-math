@@ -1,5 +1,6 @@
 file(GLOB TEST_INCLUDES
     TVector.h
+    TQuaternion.h
 )
 
 file(GLOB TEST_SOURCES

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "TVector.h"
+#include "TQuaternion.h"
 
 int main(int argc, char** argv)
 {

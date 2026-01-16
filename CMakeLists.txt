@@ -7,6 +7,7 @@ option(LUTRA_MATH_BUILD_TESTS "Build tests" ON)
 # Define library files
 file(GLOB LUTRA_MATH_INCLUDES
     include/lutra-math/*.h
+    include/lutra-math/internal/*.h
 )
 
 # Create library
