@@ -26,10 +26,10 @@ namespace lma
 		}
 		inline Color(const vec4& c)
 		{
-			assert(c.x() >= 0.0f && c.x <= 1.0f);
-			assert(c.y() >= 0.0f && c.y <= 1.0f);
-			assert(c.z() >= 0.0f && c.z <= 1.0f);
-			assert(c.w() >= 0.0f && c.w <= 1.0f);
+			assert(c.x() >= 0.0f && c.x() <= 1.0f);
+			assert(c.y() >= 0.0f && c.y() <= 1.0f);
+			assert(c.z() >= 0.0f && c.z() <= 1.0f);
+			assert(c.w() >= 0.0f && c.w() <= 1.0f);
 			auto temp = c * 255.9999f;
 			r = u8(temp.x());
 			g = u8(temp.y());
