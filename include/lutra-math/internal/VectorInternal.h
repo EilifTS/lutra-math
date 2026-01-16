@@ -203,12 +203,12 @@ namespace lma
 				}
 				return result;
 			};
-			inline float operator[](int i) const
+			inline T operator[](int i) const
 			{
 				assert(i >= 0 && i < N);
 				return data[i];
 			};
-			inline float& operator[](int i)
+			inline T& operator[](int i)
 			{
 				assert(i >= 0 && i < N);
 				return data[i];
@@ -216,7 +216,7 @@ namespace lma
 
 			inline static T Dot(const BaseVector& lhs, const BaseVector& rhs)
 			{
-				float result = 0.0f;
+				T result = T(0);
 				for (u32 i = 0; i < N; i++)
 				{
 					result += lhs.data[i] * rhs.data[i];

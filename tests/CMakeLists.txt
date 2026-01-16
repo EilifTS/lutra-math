@@ -1,6 +1,6 @@
 file(GLOB TEST_INCLUDES
+    TMatrix.h
     TVector.h
-    TQuaternion.h
 )
 
 file(GLOB TEST_SOURCES
