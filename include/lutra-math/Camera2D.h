@@ -24,6 +24,7 @@ namespace lma
 		inline vec2 GetCenter() const { return position + window_size * 0.5f; };
 
 		inline float& GetZoom() { return zoom; };
+		inline const float& GetZoom() const { return zoom; };
 
 		inline vec2 WorldToScreenPosition(const vec2& pos) const
 		{

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include "TAngle.h"
 #include "TMatrix.h"
 #include "TQuaternion.h"
 #include "TVector.h"

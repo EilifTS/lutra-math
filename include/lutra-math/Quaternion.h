@@ -15,6 +15,32 @@ namespace lma
 		static inline quat J() { return quat(0.0f, 0.0f, 1.0f, 0.0f); }
 		static inline quat K() { return quat(0.0f, 0.0f, 0.0f, 1.0f); }
 
+		static inline quat RotationX(float angle_rad) 
+		{
+			const float sin = std::sinf(0.5f * angle_rad);
+			const float cos = std::cosf(0.5f * angle_rad);
+			return quat(cos, sin, 0.0f, 0.0f);
+		}
+		static inline quat RotationY(float angle_rad)
+		{
+			const float sin = std::sinf(0.5f * angle_rad);
+			const float cos = std::cosf(0.5f * angle_rad);
+			return quat(cos, 0.0f, sin, 0.0f);
+		}
+		static inline quat RotationZ(float angle_rad)
+		{
+			const float sin = std::sinf(0.5f * angle_rad);
+			const float cos = std::cosf(0.5f * angle_rad);
+			return quat(cos, 0.0f, 0.0f, sin);
+		}
+		static inline quat FromYawPitchRoll(float yaw, float pitch, float roll)
+		{
+			const quat yaw_quat = RotationY(yaw);
+			const quat pitch_quat = RotationX(pitch);
+			const quat roll_quat = RotationZ(roll);
+			return roll_quat * pitch_quat * roll_quat;
+		}
+
 		inline const vec4& ToVector() const { return q; }
 
 		inline quat operator*(const quat& rhs) const
