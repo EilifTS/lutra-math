@@ -38,7 +38,7 @@ namespace lma
 			const quat yaw_quat = RotationY(yaw);
 			const quat pitch_quat = RotationX(pitch);
 			const quat roll_quat = RotationZ(roll);
-			return roll_quat * pitch_quat * roll_quat;
+			return roll_quat * pitch_quat * yaw_quat;
 		}
 
 		inline const vec4& ToVector() const { return q; }
