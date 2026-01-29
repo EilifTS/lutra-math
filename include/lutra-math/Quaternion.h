@@ -17,20 +17,20 @@ namespace lma
 
 		static inline quat RotationX(float angle_rad) 
 		{
-			const float sin = std::sinf(0.5f * angle_rad);
-			const float cos = std::cosf(0.5f * angle_rad);
+			const float sin = sinf(0.5f * angle_rad);
+			const float cos = cosf(0.5f * angle_rad);
 			return quat(cos, sin, 0.0f, 0.0f);
 		}
 		static inline quat RotationY(float angle_rad)
 		{
-			const float sin = std::sinf(0.5f * angle_rad);
-			const float cos = std::cosf(0.5f * angle_rad);
+			const float sin = sinf(0.5f * angle_rad);
+			const float cos = cosf(0.5f * angle_rad);
 			return quat(cos, 0.0f, sin, 0.0f);
 		}
 		static inline quat RotationZ(float angle_rad)
 		{
-			const float sin = std::sinf(0.5f * angle_rad);
-			const float cos = std::cosf(0.5f * angle_rad);
+			const float sin = sinf(0.5f * angle_rad);
+			const float cos = cosf(0.5f * angle_rad);
 			return quat(cos, 0.0f, 0.0f, sin);
 		}
 		static inline quat FromYawPitchRoll(float yaw, float pitch, float roll)
