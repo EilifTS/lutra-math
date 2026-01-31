@@ -1,4 +1,5 @@
 #pragma once
+#include <lutra-math/Matrix.h>
 #include <lutra-math/Vector.h>
 
 namespace lma
