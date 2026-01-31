@@ -43,6 +43,22 @@ namespace lma
 
 		inline const vec4& ToVector() const { return q; }
 
+		inline mat4 ToMat4() const
+		{
+			const float s = 1.0f / q.LengthSquared();
+			const float r = q.x();
+			const float i = q.y();
+			const float j = q.z();
+			const float k = q.w();
+
+			return mat4({
+				1.0f - 2.0f * s * (j * j + k * k),        2.0f * s * (i * j - k * r),        2.0f * s * (i * k + j * r), 0.0f,
+				       2.0f * s * (i * j + k * r), 1.0f - 2.0f * s * (i * i + k * k),        2.0f * s * (j * k - i * r), 0.0f,
+				       2.0f * s * (i * k - j * r),        2.0f * s * (j * k + i * r), 1.0f - 2.0f * s * (i * i + j * j), 0.0f,
+				                             0.0f,                              0.0f,                              0.0f, 1.0f }
+			);
+		}
+
 		inline quat operator*(const quat& rhs) const
 		{
 			const vec4& v1 = q;
