@@ -63,11 +63,20 @@ namespace lma
 
 			inline void Normalize()
 			{
-				*this /= Length();
+				const float len = Length();
+				if (len != 0.0f)
+				{
+					*this /= len;
+				}
 			}
 			inline BaseVector GetNormalized() const
 			{
-				return *this / Length();
+				const float len = Length();
+				if (len == 0.0f)
+				{
+					return *this;
+				}
+				return *this / len;
 			}
 
 			inline bool IsZero() const
@@ -228,7 +237,12 @@ namespace lma
 			{
 				const float dot = float(Dot(lhs, rhs));
 				const float l = lhs.Length() * rhs.Length();
-				return std::acos(dot / l);
+				if (l == 0.0f)
+				{
+					return 0.0f;
+				}
+				const float c = dot / l;
+				return std::acos(c < -1.0f ? -1.0f : (c > 1.0f ? 1.0f : c));
 			}
 
 			/* Accessors */

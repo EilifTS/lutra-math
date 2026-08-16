@@ -46,7 +46,17 @@ namespace lma
 
 		inline mat4 ToMat4() const
 		{
-			const float s = 1.0f / q.LengthSquared();
+			const float len_sq = q.LengthSquared();
+			if (len_sq == 0.0f)
+			{
+				return mat4({
+					1.0f, 0.0f, 0.0f, 0.0f,
+					0.0f, 1.0f, 0.0f, 0.0f,
+					0.0f, 0.0f, 1.0f, 0.0f,
+					0.0f, 0.0f, 0.0f, 1.0f }
+				);
+			}
+			const float s = 1.0f / len_sq;
 			const float r = q.x();
 			const float i = q.y();
 			const float j = q.z();
@@ -78,6 +88,6 @@ namespace lma
 			return quat(-q);
 		};
 	private:
-		vec4 q{};
+		vec4 q{ 1.0f, 0.0f, 0.0f, 0.0f };
 	};
 }

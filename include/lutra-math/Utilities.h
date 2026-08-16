@@ -88,6 +88,12 @@ namespace lma
 		return v1 > v2 ? v1 : v2;
 	}
 
+	template <>
+	inline int Max(int v1, int v2)
+	{
+		return v1 > v2 ? v1 : v2;
+	}
+
 	template <typename T>
 	inline T Clamp(T x, T min_v, T max_v)
 	{
@@ -107,7 +113,12 @@ namespace lma
 	template <typename T>
 	inline T RoundDown(T value, T multiple_of)
 	{
-		return (value / multiple_of) * multiple_of;
+		T result = (value / multiple_of) * multiple_of;
+		if (result > value)
+		{
+			result -= multiple_of;
+		}
+		return result;
 	}
 
 	template <typename T>

@@ -1,5 +1,7 @@
 #pragma once
 #include <lutra-math/Vector.h>
+#include <cmath>
+#include <concepts>
 
 namespace lma
 {
@@ -7,6 +9,8 @@ namespace lma
 	class RectangleT
 	{
 	public:
+		using ElementT = typename T::element_t;
+
 		RectangleT()
 			: position(), size()
 		{
@@ -45,7 +49,7 @@ namespace lma
 			}
 			else if (point.x() >= position.x() + size.x())
 			{
-				point.x() = position.x() + size.x() - 1;
+				point.x() = InsideUpperBound(position.x() + size.x());
 			}
 			if (point.y() < position.y())
 			{
@@ -53,7 +57,7 @@ namespace lma
 			}
 			else if (point.y() >= position.y() + size.y())
 			{
-				point.y() = position.y() + size.y() - 1;
+				point.y() = InsideUpperBound(position.y() + size.y());
 			}
 			return point;
 		};
@@ -69,6 +73,18 @@ namespace lma
 		};
 
 	private:
+		static inline ElementT InsideUpperBound(ElementT bound)
+		{
+			if constexpr (std::integral<ElementT>)
+			{
+				return bound - ElementT(1);
+			}
+			else
+			{
+				return std::nextafter(bound, ElementT(0));
+			}
+		}
+
 		T position;
 		T size;
 	};
