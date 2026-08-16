@@ -9,11 +9,26 @@ namespace lma
 	public:
 		static inline Angle FromDegrees(float degrees) { return FromTurns(degrees / 360.0f); }
 		static inline Angle FromRadians(float radians) { return FromTurns(radians / (2.0f * float(pi))); }
+		static inline Angle Zero() { return { 0 }; }
 
 		inline float ToDegrees() const { return (float(angle) / float(UINT32_MAX)) * 360.0f; }
 		inline float ToRadians() const { return (float(angle) / float(UINT32_MAX)) * (2.0f * float(pi)); }
 
 		static inline float DegreesToRadians(float degrees) { return degrees * ((2.0f * pi) / 360.0f); }
+
+		inline Angle operator+(Angle rhs) const { return { angle + rhs.angle }; }
+		inline Angle operator-(Angle rhs) const { return { angle - rhs.angle }; }
+		inline Angle operator-() const { return { u32(0) - angle }; }
+		inline Angle& operator+=(Angle rhs) { angle += rhs.angle; return *this; }
+		inline Angle& operator-=(Angle rhs) { angle -= rhs.angle; return *this; }
+		inline bool operator==(Angle rhs) const { return angle == rhs.angle; }
+		inline bool operator!=(Angle rhs) const { return angle != rhs.angle; }
+
+		inline float TurnsTo(Angle rhs) const { return float(double(s32(rhs.angle - angle)) / (double(UINT32_MAX) + 1.0)); }
+		inline float DegreesTo(Angle rhs) const { return TurnsTo(rhs) * 360.0f; }
+		inline float RadiansTo(Angle rhs) const { return TurnsTo(rhs) * (2.0f * float(pi)); }
+
+		static inline Angle Lerp(Angle a, Angle b, float t) { return a + FromTurns(a.TurnsTo(b) * t); }
 
 		u32 angle{};
 
