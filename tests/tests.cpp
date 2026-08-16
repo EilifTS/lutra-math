@@ -3,6 +3,8 @@
 #include "TAngle.h"
 #include "TMatrix.h"
 #include "TQuaternion.h"
+#include "TRectangle.h"
+#include "TUtilities.h"
 #include "TVector.h"
 
 int main(int argc, char** argv)

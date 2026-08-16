@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include <lutra-math/Quaternion.h>
+#include <cmath>
 
 TEST(Quaternion, Identity)
 {
@@ -36,4 +37,20 @@ TEST(Quaternion, Identities)
 	ASSERT_TRUE((-k * j).ToVector() == i.ToVector());
 	ASSERT_TRUE((k * i).ToVector() == j.ToVector());
 	ASSERT_TRUE((-i * k).ToVector() == j.ToVector());
+}
+
+TEST(Quaternion, DefaultConstructor)
+{
+	const lma::quat q;
+	ASSERT_TRUE(q.ToVector() == lma::quat::Identity().ToVector());
+}
+
+TEST(Quaternion, ToMat4Zero)
+{
+	const lma::quat q(0.0f, 0.0f, 0.0f, 0.0f);
+	const lma::mat4 m = q.ToMat4();
+	for (int i = 0; i < 16; i++)
+	{
+		ASSERT_FALSE(std::isnan(m[i]));
+	}
 }

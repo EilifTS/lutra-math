@@ -19,3 +19,17 @@ TEST(Angle, Degrees359)
 	ASSERT_EQ(angle, angle_result);
 }
 
+TEST(Angle, DegreesNegative90)
+{
+	const lma::Angle a = lma::Angle::FromDegrees(-90.0f);
+	const lma::Angle b = lma::Angle::FromDegrees(270.0f);
+	ASSERT_EQ(a.angle, b.angle);
+}
+
+TEST(Angle, Degrees360)
+{
+	const lma::Angle a = lma::Angle::FromDegrees(360.0f);
+	const lma::Angle b = lma::Angle::FromDegrees(0.0f);
+	ASSERT_EQ(a.angle, b.angle);
+}
+

@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include <lutra-math/Vector.h>
+#include <cmath>
 
 TEST(uint2, Add)
 {
@@ -81,4 +82,20 @@ TEST(vec4, Add)
 	const lma::vec4 b{ 5.0f, 6.0f, 7.0f, 8.0f };
 	const auto c = a + b;
 	ASSERT_TRUE(c == lma::vec4(6.0f, 8.0f, 10.0f, 12.0f));
+}
+
+TEST(vec2, NormalizeZero)
+{
+	lma::vec2 v(0.0f, 0.0f);
+	v.Normalize();
+	ASSERT_FALSE(std::isnan(v.x()));
+	ASSERT_FALSE(std::isnan(v.y()));
+}
+
+TEST(vec3, AngleZero)
+{
+	const lma::vec3 a(0.0f, 0.0f, 0.0f);
+	const lma::vec3 b(1.0f, 0.0f, 0.0f);
+	const float angle = lma::vec3::Angle(a, b);
+	ASSERT_FALSE(std::isnan(angle));
 }

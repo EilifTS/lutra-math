@@ -2,6 +2,8 @@ file(GLOB TEST_INCLUDES
     TAngle.h
     TMatrix.h
     TQuaternion.h
+    TRectangle.h
+    TUtilities.h
     TVector.h
 )
 
