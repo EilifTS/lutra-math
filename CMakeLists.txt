@@ -1,11 +1,11 @@
-cmake_minimum_required (VERSION 3.16)
+cmake_minimum_required (VERSION 3.28)
 project(lutra-math LANGUAGES CXX)
 
-option(LUTRA_MATH_BUILD_BENCHMARKS "Build benchmarks" ON)
-option(LUTRA_MATH_BUILD_TESTS "Build tests" ON)
+option(LUTRA_MATH_BUILD_BENCHMARKS "Build benchmarks" ${PROJECT_IS_TOP_LEVEL})
+option(LUTRA_MATH_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
 
 # Define library files
-file(GLOB LUTRA_MATH_INCLUDES
+file(GLOB LUTRA_MATH_INCLUDES CONFIGURE_DEPENDS
     include/lutra-math/*.h
     include/lutra-math/internal/*.h
 )
@@ -15,11 +15,12 @@ add_library(lutra-math INTERFACE ${LUTRA_MATH_INCLUDES})
 
 # Finish up library
 target_include_directories(lutra-math INTERFACE "include")
+target_compile_features(lutra-math INTERFACE cxx_std_20)
 
 # Testing dependencies
 include(FetchContent)
 
-if (LUTRA_MATH_BUILD_BENCHMARKS OR LUTRA_MATH_BUILD_TESTS)
+if (LUTRA_MATH_BUILD_TESTS)
     FetchContent_Declare(GTest
         GIT_REPOSITORY https://github.com/google/googletest.git
         GIT_TAG v1.16.0
@@ -49,5 +50,6 @@ endif()
 
 # Tests
 if (LUTRA_MATH_BUILD_TESTS)
+    enable_testing()
     add_subdirectory(tests)
 endif()

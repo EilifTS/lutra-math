@@ -1,4 +1,4 @@
-file(GLOB TEST_INCLUDES
+set(TEST_INCLUDES
     TAngle.h
     TMatrix.h
     TQuaternion.h
@@ -7,15 +7,12 @@ file(GLOB TEST_INCLUDES
     TVector.h
 )
 
-file(GLOB TEST_SOURCES
+set(TEST_SOURCES
     tests.cpp
 )
 
-add_executable(tests ${TEST_SOURCES})
-target_compile_features(tests PRIVATE cxx_std_20)
-target_include_directories(tests PRIVATE ${PROJECT_SOURCE_DIR}/src)
+add_executable(tests ${TEST_SOURCES} ${TEST_INCLUDES})
 target_link_libraries(tests PRIVATE lutra-math GTest::gtest)
 
-enable_testing()
 include(GoogleTest)
 gtest_discover_tests(tests)
